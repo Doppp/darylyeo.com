@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portrait animation preview</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  body { background: #e9e9e5; font: 16px/1.5 system-ui, sans-serif; padding: 32px; color: #292929; }
+  main { max-width: 1000px; margin: auto; display: grid; grid-template-columns: 440px 1fr; gap: 48px; }
+  .stage { padding: 40px; background: white; border-radius: 24px; }
+  .face { width: 360px; max-width: 100%; }
+  h1 { font: 500 28px/1.2 system-ui; margin-bottom: 16px; }
+  p { margin: 16px 0; }
+  button { padding: 10px 14px; margin: 4px; border: 1px solid #aaa; border-radius: 8px; background: white; cursor: pointer; font: inherit; }
+  button:disabled { opacity: 0.4; cursor: wait; }
+  output { display: block; padding: 12px; background: white; border-radius: 8px; font: 14px/1.5 monospace; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } .stage { max-width: 440px; } }
+</style>
+<main>
+  <div class="stage">
+    <div class="face" id="face"><img src="/assets/avatar/idle.webp" width="420" height="540" alt="Daryl's interactive portrait" draggable="false"></div>
+    <p id="face-caption">Go on, give it a pull.</p>
+  </div>
+  <section>
+    <h1>Portrait animation preview</h1>
+    <p>Move onto the portrait to trigger the annoyed expression and a skin ripple. Move across it to rub the skin, or grab and pull.</p>
+    <output id="status" aria-live="polite">Loading expression frames…</output>
+    <p>Idle sequences</p>
+    <div id="acts"></div>
+    <p>Eye poses (independent of the portrait)</p>
+    <div id="eyes"></div>
+    <p>Yawn stages</p>
+    <div id="yawns"></div>
+  </section>
+</main>
+<script src="/stretch.js"></script>
+<script src="/avatar-idle.js"></script>
+<script>
+  const face = document.getElementById('face');
+  const buttons = [];
+  let manualAct = false;
+  // Keep deliberate preview playback running while the pointer rests on its controls.
+  document.addEventListener('pointermove', event => {
+    if (manualAct && face.dataset.activity && !face.contains(event.target)) event.stopPropagation();
+  }, true);
+  function controls(id, names, activate) {
+    for (const name of names) {
+      const button = document.createElement('button');
+      button.textContent = name;
+      button.disabled = true;
+      button.onclick = () => activate(name);
+      document.getElementById(id).append(button);
+      buttons.push(button);
+    }
+  }
+  controls('acts', ['yawn', 'shifty', 'eyeroll', 'whistle', 'doze', 'tug', 'fly'], name => {
+    manualAct = true;
+    face.playPortraitAct(name);
+  });
+  controls('eyes', ['rest', 'look-e', 'look-ese', 'look-se', 'look-sse', 'look-s', 'look-ssw', 'look-sw', 'look-wsw', 'look-w', 'look-wnw', 'look-nw', 'look-nnw', 'look-n', 'look-ne', 'look-ene', 'half', 'closed'], name => {
+    face.portrait.show('idle'); face.portrait.look(name);
+  });
+  controls('yawns', ['yawn-start', 'yawn-opening', 'yawn', 'yawn-recovery'], name => face.portrait.show(name));
+  setInterval(() => {
+    const ready = face.portrait && face.portrait.ready;
+    buttons.forEach(button => button.disabled = !ready);
+    document.getElementById('status').textContent = ready
+      ? `Face: ${face.dataset.expression} · Eyes: ${face.dataset.gaze} · Act: ${face.dataset.activity || 'none'}`
+      : 'Loading expression frames…';
+  }, 100);
+</script>
+</html>

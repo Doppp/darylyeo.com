@@ -109,7 +109,7 @@ h1, h2 {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 0.75rem;
+  object-fit: fill;
   pointer-events: none;
 }
 
@@ -126,6 +126,35 @@ h1, h2 {
 .face.is-live img { visibility: hidden; }
 
 .face-caption { min-height: 1.75em; }
+
+.portrait-fly, .portrait-hand, .portrait-puff, .portrait-notes {
+  position: absolute;
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.portrait-fly.is-visible, .portrait-hand.is-visible,
+.portrait-puff.is-visible, .portrait-notes.is-visible { opacity: 1; }
+.portrait-fly { left: 0; top: 0; width: 1.1rem; height: 1.1rem; }
+.portrait-fly svg { overflow: visible; width: 100%; height: 100%; }
+.portrait-fly ellipse { fill: #dce6eb; fill-opacity: 0.8; stroke: #555; stroke-width: 1; }
+.portrait-fly path { fill: none; stroke: #333; stroke-width: 1.5; }
+.portrait-fly .fly-body, .portrait-fly .fly-head { fill: #252525; }
+.fly-wings { transform-origin: 20px 18px; animation: fly-wings 0.045s linear infinite alternate; }
+.is-landed .fly-wings { animation: none; transform: scaleX(0.6); }
+.portrait-hand { left: 0; top: 0; width: 1.8rem; height: 2.2rem; }
+.portrait-hand svg { fill: #fff; stroke: #292929; stroke-width: 1.7; width: 100%; height: 100%; }
+.portrait-puff { left: 49%; top: 51%; font-size: 1.6rem; color: #fff; text-shadow: 0 1px 2px #555; }
+.portrait-puff.is-visible { animation: portrait-puff 0.4s ease-out infinite; }
+.portrait-notes { left: 70%; top: 48%; font-size: 1.1rem; color: #555; }
+.portrait-notes.is-visible { animation: portrait-notes 1s ease-out infinite; }
+@keyframes fly-wings { to { transform: scaleX(0.35); } }
+@keyframes portrait-puff { to { transform: translate(1rem, -0.7rem); opacity: 0; } }
+@keyframes portrait-notes { to { transform: translate(0.5rem, -1.5rem); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .portrait-fly, .portrait-hand, .portrait-puff, .portrait-notes { display: none; }
+}
 
 @media (max-width: 736px) {
   html { font-size: 11pt; }

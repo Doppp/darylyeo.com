@@ -1,0 +1,32 @@
+{
+  "master": [
+    1106,
+    1422
+  ],
+  "crop": [
+    330,
+    455,
+    410,
+    110
+  ],
+  "frames": {
+    "rest": "idle",
+    "closed": "blink",
+    "half": "eyes-half",
+    "look-e": "look-right",
+    "look-w": "look-left",
+    "look-n": "look-up",
+    "look-ese": "look-ese",
+    "look-se": "look-se",
+    "look-sse": "look-sse",
+    "look-s": "look-s",
+    "look-ssw": "look-ssw",
+    "look-sw": "look-sw",
+    "look-wsw": "look-wsw",
+    "look-wnw": "look-wnw",
+    "look-nw": "look-nw",
+    "look-nnw": "look-nnw",
+    "look-ne": "look-ne",
+    "look-ene": "look-ene"
+  }
+}
