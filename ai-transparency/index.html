@@ -3,7 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light only">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    // Apply a saved theme before first paint; otherwise the system preference wins.
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+    } catch (e) {}
+  </script>
   <title>AI Transparency Statement · Daryl Yeo</title>
   <meta name="description" content="How Daryl Yeo uses AI in writing published on this site.">
   <link rel="canonical" href="https://darylyeo.com/ai-transparency/">
@@ -16,23 +23,62 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/cli.css">
+  <style>
+    .page-head { grid-template-columns: minmax(0, 1fr) auto; padding: 1.1rem 1.75rem 1rem; }
+    .page-head h1 { color: var(--accent); font-size: 1.35rem; font-weight: 700; }
+    .page-head p { margin-top: 0.2rem; color: var(--dim); }
+    .page-head nav { color: var(--dim); text-align: right; }
+    .statement { max-width: 60rem; }
+    .statement h2 { font-size: 1em; font-weight: 700; }
+    .statement p { margin-top: 0.45rem; }
+    @media (max-width: 900px) { .page-head nav { text-align: left; } }
+  </style>
 </head>
-<body>
-  <div class="site-wrapper">
-    <main class="site-main">
-      <section class="container">
-        <h2>AI Transparency Statement</h2>
-        <div class="body-text">
-          <p>I use AI tools in parts of my writing workflow on this site.</p>
-          <p>Posts published here reflect my own ideas, judgment and conclusions. AI may help at the edges: tightening language, improving flow, catching awkward phrasing or helping me test whether an explanation can be made simpler and clearer.</p>
-          <p>I also use AI conversationally during development of an essay, much like I would use notes, outlines or a second pair of eyes. It can be useful for pressure-testing an argument, exploring alternative structures or surfacing angles I may want to pursue or reject.</p>
-          <p>What it does not do is replace authorship. The thinking, selection and final responsibility for what appears on this site are mine.</p>
+<body data-home="/" data-ai="/ai-transparency/">
+  <div class="desk">
+    <div class="window">
+      <div class="titlebar">
+        <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+        <span>~/darylyeo/ai-transparency.md — zsh</span>
+      </div>
+
+      <main class="screen">
+        <section class="welcome page-head">
+          <span class="title">─ darylyeo.com v2026.10 ─</span>
+          <div>
+            <h1>AI Transparency Statement</h1>
+            <p>How I use AI in the writing on this site.</p>
+          </div>
+          <nav><a href="/">← /home</a></nav>
+        </section>
+
+        <section class="transcript">
+          <p class="user">&gt; <b>/ai-transparency</b></p>
+          <div class="tool"><b>Read</b>(ai-transparency.md)<div class="result">⎿  Read 4 paragraphs</div></div>
+          <div class="reply statement">
+            <p>I use AI tools in parts of my writing workflow on this site.</p>
+            <p>Posts published here reflect my own ideas, judgment and conclusions. AI may help at the edges: tightening language, improving flow, catching awkward phrasing or helping me test whether an explanation can be made simpler and clearer.</p>
+            <p>I also use AI conversationally during development of an essay, much like I would use notes, outlines or a second pair of eyes. It can be useful for pressure-testing an argument, exploring alternative structures or surfacing angles I may want to pursue or reject.</p>
+            <p>What it does not do is replace authorship. The thinking, selection and final responsibility for what appears on this site are mine.</p>
+          </div>
+        </section>
+
+        <div class="prompt-wrap">
+          <form class="prompt" id="prompt" autocomplete="off">
+            <span aria-hidden="true">&gt;</span>
+            <input id="prompt-input" type="text" aria-label="Command or message to Daryl" placeholder="Try “/home”, “/theme”, or type a note to Daryl" aria-controls="menu" aria-autocomplete="list">
+          </form>
+          <ul class="menu" id="menu" role="listbox" hidden></ul>
         </div>
-        <p class="small-text">© 2026 Daryl Yeo. All rights reserved. · <a href="/">Home</a></p>
-      </section>
-    </main>
+        <div class="status">
+          <span class="spinner"><i aria-hidden="true">✻</i>Ready.</span>
+          <span>/ for commands · © 2026 Daryl Yeo</span>
+        </div>
+      </main>
+    </div>
   </div>
+  <script src="/cli.js" defer></script>
 </body>
 </html>
