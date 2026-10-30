@@ -1,0 +1,147 @@
+/* Mirrors the original Carrd design: grey backdrop, white panel, Inter light. */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 18pt; }
+@media (max-width: 1680px) { html { font-size: 13pt; } }
+@media (max-width: 980px) { html { font-size: 11pt; } }
+
+body {
+  background: #CFCFCF;
+  color: #6B6B6B;
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+  min-width: 320px;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: none;
+}
+
+a { color: inherit; text-decoration: underline; transition: color 0.25s ease; }
+a:hover { text-decoration: none; }
+
+.site-wrapper {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 1rem;
+  overflow: hidden;
+}
+
+.site-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rem;
+  max-width: 100%;
+  background: #FFFFFF;
+  animation: fade-in 0.75s ease-in-out;
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.container {
+  width: 100%;
+  max-width: 70rem;
+  min-height: 30rem;
+  padding: 8rem 6rem;
+  text-align: left;
+}
+
+.container > * + * { margin-top: 1.5rem; }
+
+h1, h2 {
+  color: #000000;
+  font-size: 2.5em;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+.body-text {
+  font-size: 1em;
+  font-weight: 200;
+  line-height: 1.875;
+}
+
+.body-text p + p { margin-top: 1rem; }
+
+.small-text {
+  font-size: 0.75em;
+  font-weight: 200;
+  line-height: 1.75;
+}
+
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 1.125em;
+  list-style: none;
+}
+
+.icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  border: solid 1px #000000;
+  border-radius: 2rem;
+  transition: border-color 0.25s ease;
+}
+
+.icons svg { width: 60%; height: 60%; fill: #000000; transition: fill 0.25s ease; }
+.icons a:hover { border-color: #6B6B6B; }
+.icons a:hover svg { fill: #6B6B6B; }
+
+/* Stretchy portrait. The canvas overflows the photo box so pulls can extend past it. */
+.face {
+  position: relative;
+  width: 11rem;
+  aspect-ratio: 420 / 540;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.face.is-grabbing { cursor: grabbing; }
+
+.face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  pointer-events: none;
+}
+
+.face canvas {
+  position: absolute;
+  left: -120%;
+  top: -120%;
+  width: 340%;
+  height: 340%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.face.is-live img { visibility: hidden; }
+
+.face-caption { min-height: 1.75em; }
+
+@media (max-width: 736px) {
+  html { font-size: 11pt; }
+  .site-wrapper { padding: 0; }
+  .container { min-height: 22.5rem; padding: 3.5rem 2rem; text-align: center; }
+  .icons { justify-content: center; font-size: 1.5em; }
+  .face { margin-left: auto; margin-right: auto; }
+}
+
+@media (max-width: 480px) {
+  .container > * + * { margin-top: 1.3125rem; }
+}
+
+@media (max-width: 360px) {
+  .container { min-height: 15rem; padding: 2.625rem 1.5rem; }
+  .container > * + * { margin-top: 1.125rem; }
+  h1, h2 { font-size: 2em; }
+  .icons { gap: 0.75rem; }
+}
