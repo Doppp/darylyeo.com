@@ -49,7 +49,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (min-width: 1440px) { html { font-size: 17px; } }
 body { background: var(--desk); color: var(--fg); font-family: var(--mono); min-width: 320px; transition: background-color 0.3s; }
 .window, .titlebar, .welcome > .title, .menu { transition: background-color 0.3s, border-color 0.3s; }
@@ -151,19 +151,20 @@ a:hover { text-decoration: underline; }
 
 /* --- Transcript -------------------------------------------------------------------- */
 
-.transcript { margin-top: 0.9rem; }
+.transcript { margin-top: 1.5rem; }
 .user { color: var(--dim); }
 .user b { color: var(--fg); font-weight: 400; }
-.tool, .reply { position: relative; margin-top: 0.5rem; padding-left: 2ch; }
-.tool::before, .reply::before { content: '⏺'; position: absolute; left: 0; font-family: var(--glyph); }
+.tool, .reply { position: relative; margin-top: 0.75rem; padding-left: 1.5rem; }
+/* Draw markers instead of using a glyph that Android may render as an emoji. */
+.tool::before, .reply::before { content: ''; position: absolute; left: 0.1rem; top: 0.55em; width: 0.45em; height: 0.45em; border-radius: 50%; background: currentColor; }
 .tool::before { color: var(--green); }
 .tool b { font-weight: 700; }
 .tool .result { padding-left: 1ch; color: var(--dim); }
-.reply p + p { margin-top: 0.3rem; }
+.reply p + p { margin-top: 0.9rem; }
 
 /* --- Prompt, command menu, status line ---------------------------------------------- */
 
-.prompt-wrap { position: relative; margin-top: 0.85rem; }
+.prompt-wrap { position: relative; margin-top: 1.25rem; }
 
 .prompt {
   display: flex;
@@ -196,7 +197,7 @@ a:hover { text-decoration: underline; }
 .menu li[aria-selected="true"] { background: var(--select); color: var(--accent); }
 .menu li[aria-selected="true"] span { color: var(--fg); }
 
-.status { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.35rem; padding: 0 0.9rem; color: var(--dim); font-size: 0.78rem; }
+.status { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.65rem; padding: 0 0.9rem; color: var(--dim); font-size: 0.78rem; }
 .spinner { color: var(--accent); }
 .spinner i { display: inline-block; width: 1.4ch; margin-right: 0.6ch; font-family: var(--glyph); font-style: normal; text-align: center; }
 
