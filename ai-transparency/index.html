@@ -33,7 +33,11 @@
     .statement { max-width: 60rem; }
     .statement h2 { font-size: 1em; font-weight: 700; }
     .statement p { margin-top: 0.45rem; }
-    @media (max-width: 900px) { .page-head nav { text-align: left; } }
+    @media (max-width: 900px) {
+      .page-head { grid-template-columns: minmax(0, 1fr); padding: 1.5rem 1rem 1rem; }
+      .page-head nav { text-align: left; }
+      .page-head nav a { display: inline-block; padding-block: 0.5rem; }
+    }
   </style>
 </head>
 <body data-home="/" data-ai="/ai-transparency/">
